@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const messagesCtrl = require('./messagesCtrl');
 const session = require('express-session');
 
+const { SESSION_SECRET, SERVER_PORT } = process.env;
+
 const app = express();
 
 app.use(
@@ -25,7 +27,10 @@ app.use((req, res, next) => {
     next();
   }
 });
-
+app.get('/api/test', (req, res) => {
+  console.log('endpoint hit')
+  res.status(200).send('Hello Buddy')
+})
 app.get('/api/messages', messagesCtrl.getAllMessages);
 app.get('/api/messages/history', messagesCtrl.history);
 app.post('/api/messages', messagesCtrl.createMessage);
